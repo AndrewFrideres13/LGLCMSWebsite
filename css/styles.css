@@ -1,0 +1,181 @@
+
+/* Landing page styles */
+h1 {
+	color: green;
+}
+
+body {
+	text-align: center;
+	color: #ffffff;
+	background-color: #5a5749;
+	font-family: Verdana;
+	font-size: 0.8em;
+	text-align: center;
+}
+
+h2#topHeading {
+	color: #8cac63;
+	font-family: Tekton Pro, Arial;
+	font-size: 1.8em;
+	font-weight: 800;
+	text-align: center;
+	filter: brightness(150%);
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table,
+td,
+th {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+th {
+	text-align: left;
+}
+
+#games,
+#pageContext {
+	visibility: hidden;
+}
+
+
+/* adminPage stylings */
+
+#CMS {
+	font-size: 1.75rem;
+	font-weight: bolder;
+}
+
+.CMSOption {
+	width: 100%;
+	clear: both;
+	font-size: 2rem;
+	font-weight: bold;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.logout {
+	font-size: 1.3rem;
+}
+
+
+p {
+	font-size: 1.5rem;
+}
+
+/* Nav styles */
+nav {
+	background-color: #3f434c;
+	width: 51.4%;
+	margin: 0 auto;
+	filter: brightness(80%);
+	min-height: 50px;
+}
+
+nav a {
+	font-size: 1.5rem;
+	font-weight: 800;
+	margin: 15px 15px 0 15px;
+}
+
+
+
+blockquote {
+	padding: 0;
+	filter: brightness(150%);
+}
+
+.author {
+	display: inline;
+	font-weight: 700;
+	font-size: 1rem;
+	color: #8cac63;
+	font-family: Arial;
+}
+
+.title {
+	display: inline;
+	font-size: 1rem;
+	font-weight: 800;
+}
+
+#gameTitle {
+	background-color: peachpuff;
+	color: #ffffff;
+	border-style: ridge;
+	border-width: 2px;
+	font-family: Tekton Pro;
+}
+
+#container {
+	background-color: #3f434c;
+	width: 50%;
+	margin: 0 auto;
+	padding: 0.2em 1em 1em;
+	min-height: 500px;
+}
+
+div.gameCategory h3 {
+	color: #ff8757;
+	font-family: Arial;
+}
+
+.gameCategory {
+	background-color: #32353c;
+	width: 600px;
+	margin: 2em auto;
+	padding-left: 4px;
+	border-bottom: 1px solid #8cac63;
+	text-align: left;
+}
+
+
+a {
+	color: #fff;
+}
+
+a:hover {
+	color: #ddd;
+}
+
+table {
+	width: 75%;
+	border-style: ridge;
+	border-width: 4px;
+	margin: auto;
+}
+
+td {
+	padding: 4px;
+}
+
+td.developer {
+	color: #cccc99;
+	/*vertical-align: top;*/
+	font-size: 200%;
+}
+
+td.devId {
+	color: peachpuff;
+	vertical-align: top;
+	font-weight: 600;
+	font-size: 100%;
+}
+
+td.links {
+	font-family: Arial Narrow;
+	font-size: 0.8em;
+	font-weight: 600;
+	text-align: center;
+	font-size: 100%;
+}
+
+ul {
+	list-style-type: none;
+}
