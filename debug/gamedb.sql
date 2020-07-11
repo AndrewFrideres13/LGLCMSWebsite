@@ -9,7 +9,8 @@
 
 
 -- IMPORT INTO PHPYMYADMIN TO SET THIS UP WITH THE WEBSITE
---Has some generated data to verify import process
+-- Has some generated data to verify import process
+DROP DATABASE IF EXISTS gamedb;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -23,7 +24,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `gamedb`
 --
-
+CREATE DATABASE gamedb;
 -- --------------------------------------------------------
 
 --

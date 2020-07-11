@@ -56,5 +56,20 @@ TABLEROW;
       echo "</table>";
     ?>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+      <link
+         href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+         rel="stylesheet"
+         type="text/css"
+         />
+      
+      <link rel='stylesheet' href='css/jquery.colorpicker.css' />
+      <script src="js/jquery.easing.1.3.js"></script>
+      <script src='js/jquery.colorpicker.js'></script>
+      <script src="js/slidePanes.js"></script>
+      <div class="debug"></div>
+      <script>$("#my_color_picker").colorpicker();
+      </script>
   </body>
 </html>

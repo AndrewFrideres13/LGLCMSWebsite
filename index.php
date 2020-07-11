@@ -12,7 +12,7 @@
             <a href="makeAccounts.php">Create Account</a>
             <a href="login.php">Login</a>
             <a href="/admin/adminPage.php">Admin CMS</a>
-            <input type='color'class="my_color_picker" value='#f594d0' />
+            <input type="text" id="my_color_picker" />
          </nav>
       </header>
       <div id="container">
@@ -32,26 +32,34 @@
             //the "add a new game form"
             if ($clicked == 1) {            
          ?>
-         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" id="addForm">
             <!-- Game Title -->
-            <label id="newGameName" for="newGameName">Title:</label>
-            <input type="text" name="newGameName" id="newGameName">
-            <br/>
+            <div id="name">
+              <label id="formTxt" for="newGameName">Title</label>
+              <input type="text" name="newGameName">
+              <br/>
+            </div>
+            <div id="dev">
+              <!-- Game Dev -->
+              <label id="formTxt" for="newDev">Developer</label>
+              <input type="text" name="newDev" >
+              <br/>
+            </div>
+            <div id="yr">
+              <!-- Game Yr -->
+              <label id="formTxt" for="newYr">Year</label>
+              <input type="text" name="newYr" cols="2" rows="2">
+              <br>
+            </div>
+            <div id="genre">
+              <!-- Game Genre -->
+              <label id="formTxt" for="genreDrop">Genre</label>
+              <input type="text" name="genreDrop" >
+            </div>
             <!-- Game Summary -->
-            <label id="newSum" for="newSum">Summary:</label><br>
-            <textarea name="newSum" id="newSum" rows="10" cols="40">Enter game summary</textarea>
+            <label id="formTxt" for="newSum">Summary</label><br>
+            <textarea name="newSum" id="newSumBox" rows="10" cols="40">Enter game summary</textarea>
             <br><br>
-            <!-- Game Dev -->
-            <label id="newDev" for="newDev">Developer:</label>
-            <input type="text" name="newDev" id="newDev">
-            <br/>
-            <!-- Game Yr -->
-            <label id="newYr" for="newYr">Year Published:</label>
-            <input type="text" name="newYr" id="newYr">
-            <br><br>
-            <!-- Game Genre -->
-            <label id="genreDrop" for="genreDrop">Game genre:</label>
-            <input type="text" name="genreDrop" id="genreDrop">
             <?php
                //
                // 1)Connect to the DB server
@@ -95,18 +103,18 @@
             // Obtain and display game titles and their authors from the 
             // database to the web page by game category
          ?>
-         <h2 id="topHeading">The Last Game Library</h2>
+         <h2 id="topHeading">The Last Game Library
          <?php 
             if(isset($_SESSION['uName'])) {
-             $uName = $_SESSION['uName'];
-             echo "<h2 style=\"color:white\">Welcome back " .  $uName . "<h2>\n";
+               $uName = $_SESSION['uName'];
+               echo "<h2 style=\"color:white;font-size:0.75rem;\">  Logged in as: " .  $uName . "<h2>\n";
             }
 
             require 'dbConnect.php';
             
             // Later here, we'll check if user submitted the Add a new game
             // form, and if so, validate their entered data...
-            if (isset($_POST['newGameName']) && ($_POST['newGameName'] != "Enter game title") && ($newGameName = trim(strip_tags($_POST['newGameName'])))) {
+            if (isset($_POST['newGameName']) && $_POST['newGameName'] != "Enter game title" && $newGameName = trim(strip_tags($_POST['newGameName']))) {
                 // now, we have a valid game title, so let's check if an author
                 // has been entered for the new game
                 if (!$newDev = trim(strip_tags($_POST['newDev']))) {
@@ -179,7 +187,7 @@
          <?php
                 } else { // new game title was NOT found in our DB - so add it...
          ?>
-                    <h3 style="color: #fff;">New Game: <div class="author"><?= $newGameName ?></div>added sucessfully</h3>
+                    <h3 style="color: #fff;">New Game: <div class="author"><?= $newGameName ?></div> added sucessfully</h3>
          <?php  
                     try {
                         // Yay!  We are finally ready to insert the new game into our DB
@@ -192,33 +200,33 @@
                         $s->bindValue(':summary', $newSum);
                         $s->bindValue(':yr', $newYr);
                     
-                    //If the dev exists associate the existing ID here
-                    if ($numDevs) {
-                      $s->bindValue(':devId', $existingDevId);
-                    } else {
-                        $sqlDevStatement = "INSERT INTO developers(id, developer) VALUES(:id, :developer);";
-                        $sqlDev = $pdo->prepare($sqlDevStatement); // $s is a PDOStatement object
-                        //Does not exist, so create new genre, and associate the id
-                        $s->bindValue(':devId', $newDevId);
-                        $sqlDev->bindValue(':id', $newDevId);
-                        $sqlDev->bindValue(':developer', $newDev);
-                        $sqlDev->execute();
-                    }
-                    
-                    //If the genre exists associate the existing ID here
-                    if ($numGenres) {
-                        $s->bindValue(':genreId', $existingGenreId);
-                    } else {
-                        $sqlGenreStatement = "INSERT INTO genres(id, catName) VALUES(:id, :catName);";
-                        $sqlGenre = $pdo->prepare($sqlGenreStatement); // $s is a PDOStatement object
-                        //Does not exist, so create new genre, and associate the id
-                        $s->bindValue(':genreId', $newGenreId);
-                        $sqlGenre->bindValue(':id', $newGenreId);
-                        $sqlGenre->bindValue(':catName', $genreDrop);
-                        $sqlGenre->execute();
-                    }
+                        //If the dev exists associate the existing ID here
+                        if ($numDevs) {
+                          $s->bindValue(':devId', $existingDevId);
+                        } else {
+                            $sqlDevStatement = "INSERT INTO developers(id, developer) VALUES(:id, :developer);";
+                            $sqlDev = $pdo->prepare($sqlDevStatement); // $s is a PDOStatement object
+                            //Does not exist, so create new genre, and associate the id
+                            $s->bindValue(':devId', $newDevId);
+                            $sqlDev->bindValue(':id', $newDevId);
+                            $sqlDev->bindValue(':developer', $newDev);
+                            $sqlDev->execute();
+                        }
                         
-                        $s->execute();
+                        //If the genre exists associate the existing ID here
+                        if ($numGenres) {
+                            $s->bindValue(':genreId', $existingGenreId);
+                        } else {
+                            $sqlGenreStatement = "INSERT INTO genres(id, catName) VALUES(:id, :catName);";
+                            $sqlGenre = $pdo->prepare($sqlGenreStatement); // $s is a PDOStatement object
+                            //Does not exist, so create new genre, and associate the id
+                            $s->bindValue(':genreId', $newGenreId);
+                            $sqlGenre->bindValue(':id', $newGenreId);
+                            $sqlGenre->bindValue(':catName', $genreDrop);
+                            $sqlGenre->execute();
+                        }
+                            
+                            $s->execute();
                     } catch (PDOException $e) {
                         $error = 'Error adding new info: ' . $e->getMessage();
                         include 'error.html.php';
@@ -246,12 +254,12 @@
                 <h3><?= $genreName ?></h3>
             <?php
                try {
-               $sql = 'SELECT * FROM games, developers, genres WHERE games.genreId = genres.id AND games.devId = developers.id AND genres.catName ="'. $genreName.'" ORDER BY genres.catName' ;
-               $gameResult = $pdo->query($sql);
+                 $sql = 'SELECT * FROM games, developers, genres WHERE games.genreId = genres.id AND games.devId = developers.id AND genres.catName ="'. $genreName.'" ORDER BY genres.catName' ;
+                 $gameResult = $pdo->query($sql);
                } catch (PDOException $e) {
-               $error = 'Error fetching game info: ' . $e->getMessage();
-               include 'error.html.php';
-               exit();
+                 $error = 'Error fetching game info: ' . $e->getMessage();
+                 include 'error.html.php';
+                 exit();
                }
                
                echo "<blockquote>\n";
@@ -266,7 +274,7 @@
                      <br>
                      <small><?= $gameInfo['summary'] ?></small><br/><br/>
                   </div>
-          <?php}//end while getting the game columns?>
+         <?php }//end while getting the game columns?>
             </blockquote>
          </div>
       <?php } // end while more rows in categories result set?>
@@ -281,14 +289,13 @@
          rel="stylesheet"
          type="text/css"
          />
-      <script src='js/spectrum.js'></script>
-      <link rel='stylesheet' href='css/spectrum.css' />
+      
+      <link rel='stylesheet' href='css/jquery.colorpicker.css' />
       <script src="js/jquery.easing.1.3.js"></script>
+      <script src='js/jquery.colorpicker.js'></script>
       <script src="js/slidePanes.js"></script>
       <div class="debug"></div>
-      <script>$(".my_color_picker").spectrum({
-         color: "#f00"
-         });
+      <script>$("#my_color_picker").colorpicker();
       </script>
    </body>
 </html>

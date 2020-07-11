@@ -7,6 +7,7 @@ $database = "gamedb";
 $uName = "root";
 $pWord = "";
 
+//TODO Add user authentication for logins
 //Try to login, if connection fails we go down to the catch
 try {
     // Create a new PDO instance, recall .'s are like +'s for strings in js

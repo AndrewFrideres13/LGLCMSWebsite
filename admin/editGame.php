@@ -13,34 +13,38 @@ if(!session_id()) {
   </head>
   <body>
   <div id="container">
-  <h2> Update Developer Name </h2>
+  <h2> Update Game Info </h2>
     <?php
     if(isset($_GET['gId'])) {
         $gId = $_GET['gId'];
         $gameTitle = $_GET['gameTitle'];
     } else {
-		echo "<h2 style=\"color:red\">Game ID and/or title not found<h2>\n";
-	}
+        echo "<h2 style=\"color:red\">Game ID and/or title not found<h2>\n";
+    }
       
       if(isset($_POST['submit'])) {
-        require "../dbConnect.php";
-        
-        try {
-          $sql = "UPDATE games SET gId = :gId, gameTitle = :gameTitle, yearReleased = :yearReleased, summary = :summary WHERE gId = $gId";
-          $statement = $pdo->prepare($sql);
-		  //We use post down here to capture the values from our form
-		  $statement->bindValue(":gId", $_POST['gId']);
-          $statement->bindValue(":gameTitle", $_POST['gameTitle']);
+        if (trim(strip_tags($_POST['gameTitle'])) != null && trim(strip_tags($_POST['yearReleased'])) != null && trim(strip_tags($_POST['summary'])) != null) {
+          require "../dbConnect.php";
           
-          $statement->bindValue(":yearReleased", $_POST['yearReleased']);
-		  $statement->bindValue(":summary", $_POST['summary']);
-		   
-          $statement->execute();
+          try {
+            $sql = "UPDATE games SET gId = :gId, gameTitle = :gameTitle, yearReleased = :yearReleased, summary = :summary WHERE gId = $gId";
+            $statement = $pdo->prepare($sql);
+            //We use post down here to capture the values from our form
+            $statement->bindValue(":gId", $_POST['gId']);
+            $statement->bindValue(":gameTitle", $_POST['gameTitle']);
+            
+            $statement->bindValue(":yearReleased", $_POST['yearReleased']);
+            $statement->bindValue(":summary", $_POST['summary']);
+         
+            $statement->execute();
 
-          header("Location: http://localhost/admin/gamesAdmin.php");
-        } catch (Exception $ex) {
-          echo "Error";
-        }
+            header("Location: http://localhost/admin/gamesAdmin.php");
+          } catch (Exception $ex) {
+            echo "Error";
+          }
+        } else {
+           echo "<h2 style=\"color:red\">Fill in all info to update the game please<h2>\n";
+        } 
       }
     ?>
     <form  method="post">

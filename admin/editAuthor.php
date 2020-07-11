@@ -23,16 +23,20 @@ if(!session_id()) {
 	}
       
       if(isset($_POST['submit'])) {
-        require "../dbConnect.php";
-        
-        try {
-          $updateDeveloperInDevelopersTable = "UPDATE developers SET developer = :developer WHERE id = $devId";
-		  $developersTableStatement = $pdo->prepare($updateDeveloperInDevelopersTable);
-          $developersTableStatement->bindValue(":developer", $_POST['developer']);
-          $developersTableStatement->execute();
-          header("Location: http://localhost/admin/devsAdmin.php");
-        } catch (Exception $ex) {
-          echo "Error";
+        if(trim(strip_tags($_POST['developer'])) != null) {
+            require "../dbConnect.php";
+            
+            try {
+              $updateDeveloperInDevelopersTable = "UPDATE developers SET developer = :developer WHERE id = $devId";
+              $developersTableStatement = $pdo->prepare($updateDeveloperInDevelopersTable);
+              $developersTableStatement->bindValue(":developer", $_POST['developer']);
+              $developersTableStatement->execute();
+              header("Location: http://localhost/admin/devsAdmin.php");
+            } catch (Exception $ex) {
+              echo "Error";
+            }
+        } else {
+          echo "<h2 style=\"color:red\">Fill in the developer name please<h2>\n";
         }
       }
     ?>

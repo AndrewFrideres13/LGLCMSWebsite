@@ -29,22 +29,21 @@ else { // add new book title link was NOT clicked
 //Insert new user into our database
 if (isset($_POST['uName']) && isset($_POST['pWord'])) {
     try {
-        $sql = "INSERT INTO users VALUES(:uName, :pWord)";
-        $statement = $pdo->prepare($sql);
         $uName = $_POST['uName'];
         $pWord = $_POST['pWord'];
-        $statement->bindValue(":uName", $uName);
-        $statement->bindValue(":pWord", $pWord);
+        $sql2 = "CREATE USER '" .$uName. "'@'localhost' IDENTIFIED BY '".$pWord."'; USE gamedb; GRANT ALL PRIVILEGES ON gamedb.* TO '" .$uName. "'@'localhost';FLUSH PRIVILEGES;";
+        $statement = $pdo->prepare($sql2);
+        
         //$password = password_hash($password, PASSWORD_DEFAULT);
         $statement->execute();
         echo "<h2 >$uName has sucessfully been added.<h2>";
     } catch(Exception $ex) {
-        echo "<h2 style=\"color:red\">Error adding $uName. Verify the DB is reachable.<h2>";
+        echo "<h2 style=\"color:red\">Error adding $uName. Verify the DB is reachable.".$sql2."<h2>";
     }
 }
 ?>
       <!-- On our form the name will be what gets posted and how we retrieve it in other places -->
-      <form id="logins" method="POST">
+      <form method="POST">
         <label for="username">Username:</label>
         <input type="text" name="uName"><br>
         <label for="password">Password:</label>
@@ -52,5 +51,20 @@ if (isset($_POST['uName']) && isset($_POST['pWord'])) {
         <input type="submit" name="submit" value="Login" >
       </form>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+      <link
+         href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+         rel="stylesheet"
+         type="text/css"
+         />
+      
+      <link rel='stylesheet' href='css/jquery.colorpicker.css' />
+      <script src="js/jquery.easing.1.3.js"></script>
+      <script src='js/jquery.colorpicker.js'></script>
+      <script src="js/slidePanes.js"></script>
+      <div class="debug"></div>
+      <script>$("#my_color_picker").colorpicker();
+      </script>
   </body>
 </html>
