@@ -40,11 +40,17 @@ if(!session_id()) {
            type="text/css"
            />
         
-        <link rel='stylesheet' href='css/jquery.colorpicker.css' />
-        <script src="js/jquery.easing.1.3.js"></script>
-        <script src='js/jquery.colorpicker.js'></script>
-        <script src="js/slidePanes.js"></script>
-        <div class="debug"></div>
+        <link rel='stylesheet' href='../css/jquery.colorpicker.css' />
+        <script src='../js/jquery.colorpicker.js'></script>
+        <div class="debug">
+		  <?php
+		if (isset($_SESSION['passedColor'])) {
+			include '../colorpicker.php'; 
+		} else {
+			echo "<h2 style=\"color:red\">COLOR LOAD ERROR<h2>\n";
+		}
+		  ?>
+		  </div>
         <script>$("#my_color_picker").colorpicker();
         </script>
     </body>

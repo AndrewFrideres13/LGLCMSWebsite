@@ -9,7 +9,7 @@ if(!session_id()) {
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Authors Admin Page: Games</title>
+    <title>Admin Page: Games</title>
     <link href="../css/styles.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
@@ -25,6 +25,15 @@ if(!session_id()) {
     <div id="container">
     <h2>Manage Games</h2>
     <?php
+    //Required anywhere we use our db
+      if(!session_id()) {
+          session_start();
+      }
+      if (isset($_SESSION["uName"])) {
+        $uName = $_SESSION["uName"];
+        //Is our HASHED password remember
+        $pWord = $_SESSION["pWord"];
+      } 
       require "../dbConnect.php";
       //Grab all entries from our authors table, and order them nicely
       try {
@@ -44,8 +53,8 @@ if(!session_id()) {
       foreach($gameArray as $row) {
         echo <<<TABLEROW
         <tr>
-          <td class="game">$row[gameTitle]</td>
-          <td class="gameId">$row[gId]</td>
+          <td class="categoryTitle">$row[gameTitle]</td>
+          <td class="categoryID">$row[gId]</td>
           <td class="links">
             <a href="editGame.php?gId=$row[gId]&gameTitle=$row[gameTitle]">Edit</a>   
             <a href="deleteGame.php?gId=$row[gId]&gameTitle=$row[gameTitle]">Delete</a>   
@@ -65,11 +74,15 @@ TABLEROW;
          type="text/css"
          />
       
-      <link rel='stylesheet' href='css/jquery.colorpicker.css' />
-      <script src="js/jquery.easing.1.3.js"></script>
-      <script src='js/jquery.colorpicker.js'></script>
-      <script src="js/slidePanes.js"></script>
-      <div class="debug"></div>
+      <link rel='stylesheet' href='../css/jquery.colorpicker.css' />
+      <script src='../js/jquery.colorpicker.js'></script>
+      <div class="debug">
+	    <?php
+		if (isset($_SESSION['passedColor'])) {
+			include '../colorpicker.php'; 
+		}
+	  ?>
+	  </div>
       <script>$("#my_color_picker").colorpicker();
       </script>
   </body>

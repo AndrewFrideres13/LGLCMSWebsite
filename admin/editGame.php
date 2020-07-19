@@ -24,6 +24,15 @@ if(!session_id()) {
       
       if(isset($_POST['submit'])) {
         if (trim(strip_tags($_POST['gameTitle'])) != null && trim(strip_tags($_POST['yearReleased'])) != null && trim(strip_tags($_POST['summary'])) != null) {
+          //Required anywhere we use our db
+          if(!session_id()) {
+              session_start();
+          }
+          if (isset($_SESSION["uName"])) {
+            $uName = $_SESSION["uName"];
+            //Is our HASHED password remember
+            $pWord = $_SESSION["pWord"];
+          } 
           require "../dbConnect.php";
           
           try {
@@ -59,5 +68,14 @@ if(!session_id()) {
       <input type="submit" name="submit" value="Update">
     </form>
     </div>
+	 <div class="debug">
+	    <?php
+		if (isset($_SESSION['passedColor'])) {
+			include '../colorpicker.php'; 
+		} else {
+			echo "<h2 style=\"color:red\">COLOR LOAD ERROR<h2>\n";
+		}
+	  ?>
+	  </div>
   </body>
 </html>

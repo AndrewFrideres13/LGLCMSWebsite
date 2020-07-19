@@ -95,25 +95,6 @@ INSERT INTO `genres` (`id`, `catName`) VALUES
 (3, 'Adventure'),
 (4, 'Indie');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `uName` varchar(100) NOT NULL,
-  `pWord` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`uName`, `pWord`) VALUES
-('%', 'myPassword'),
-('test', 'test');
-
 --
 -- Indexes for dumped tables
 --
@@ -135,12 +116,6 @@ ALTER TABLE `games`
 --
 ALTER TABLE `genres`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`uName`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

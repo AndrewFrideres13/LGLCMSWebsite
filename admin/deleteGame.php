@@ -20,10 +20,19 @@ if(!session_id()) {
         $gId = $_GET['gId'];
         $gameTitle = $_GET['gameTitle'];
     } else {
-		echo "<h2 style=\"color:red\">Game ID and/or title not found<h2>\n";
-	}
+        echo "<h2 style=\"color:red\">Game ID and/or title not found<h2>\n";
+    }
       
       if(isset($_POST['submit'])) {
+        //Required anywhere we use our db
+        if(!session_id()) {
+            session_start();
+        }
+        if (isset($_SESSION["uName"])) {
+          $uName = $_SESSION["uName"];
+          //Is our HASHED password remember
+          $pWord = $_SESSION["pWord"];
+        } 
         require "../dbConnect.php";
         
         try {
@@ -50,5 +59,14 @@ if(!session_id()) {
       <input type="submit" name="submit" value="Yes - DO IT NOW!">
     </form>
     </div>
+	 <div class="debug">
+	    <?php
+		if (isset($_SESSION['passedColor'])) {
+			include '../colorpicker.php'; 
+		} else {
+			echo "<h2 style=\"color:red\">COLOR LOAD ERROR<h2>\n";
+		}
+	  ?>
+	  </div>
   </body>
 </html>

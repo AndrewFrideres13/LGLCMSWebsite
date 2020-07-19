@@ -17,38 +17,45 @@
         </nav>
 </header>
 <div id="container">
+  <h2 id="topHeading">Create Account</h2>
     <?php
+//Required anywhere we use our db
+if(!session_id()) {
+    session_start();
+}
+if (isset($_COOKIE['color'])){
+					$_POST['textcolor'] = $_COOKIE['color'];
+			}
+if (isset($_SESSION["uName"])) {
+  $uName = $_SESSION["uName"];
+  //Is our HASHED password remember
+  $pWord = $_SESSION["pWord"];
+} 
+
 require "dbConnect.php";
-// Check if user clicked the Add new book title link
-if (isset($_GET['createNewAcc'])) {
-    $createNewAcc = $_GET['createNewAcc'];
-}
-else { // add new book title link was NOT clicked
-    $createNewAcc = 0;
-}
-//Insert new user into our database
-if (isset($_POST['uName']) && isset($_POST['pWord'])) {
+
+//Insert new user into our database, logged i user MUST have GRANT permissions
+if (isset($_POST['newName']) && isset($_POST['newWord'])) {
     try {
-        $uName = $_POST['uName'];
-        $pWord = $_POST['pWord'];
-        $sql2 = "CREATE USER '" .$uName. "'@'localhost' IDENTIFIED BY '".$pWord."'; USE gamedb; GRANT ALL PRIVILEGES ON gamedb.* TO '" .$uName. "'@'localhost';FLUSH PRIVILEGES;";
-        $statement = $pdo->prepare($sql2);
+        $uName = $_POST['newName'];
+        $pWord = $_POST['newWord'];
+        $sqlCreateAcct = "CREATE USER '" .$uName. "'@'localhost' IDENTIFIED BY '".$pWord."'; USE gamedb; GRANT ALL PRIVILEGES ON gamedb.* TO '" .$uName. "'@'localhost' WITH GRANT OPTION;FLUSH PRIVILEGES;";
+        $statement = $pdo->prepare($sqlCreateAcct);
         
-        //$password = password_hash($password, PASSWORD_DEFAULT);
         $statement->execute();
         echo "<h2 >$uName has sucessfully been added.<h2>";
-    } catch(Exception $ex) {
-        echo "<h2 style=\"color:red\">Error adding $uName. Verify the DB is reachable.".$sql2."<h2>";
+    } catch(PDOException $ex) {
+        echo "<h2 style=\"color:red\">Error adding $uName. Verify the DB is reachable.<h2><br><br>";
     }
 }
-?>
+?> 
       <!-- On our form the name will be what gets posted and how we retrieve it in other places -->
       <form method="POST">
-        <label for="username">Username:</label>
-        <input type="text" name="uName"><br>
-        <label for="password">Password:</label>
-        <input type="password" name="pWord"><br>
-        <input type="submit" name="submit" value="Login" >
+        <label id="hidden" for="username">Username:</label>
+        <input type="text" name="newName" placeholder="Username"><br>
+        <label id="hidden" for="password">Password:</label>
+        <input type="password" name="newWord" placeholder="Password"><br>
+        <input type="submit" name="submit" value="Create Account" >
       </form>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
@@ -63,7 +70,13 @@ if (isset($_POST['uName']) && isset($_POST['pWord'])) {
       <script src="js/jquery.easing.1.3.js"></script>
       <script src='js/jquery.colorpicker.js'></script>
       <script src="js/slidePanes.js"></script>
-      <div class="debug"></div>
+      <div class="debug">
+	    <?php
+		if (isset($_SESSION['passedColor'])) {
+			include 'colorpicker.php'; 
+		}
+	  ?>
+	  </div>
       <script>$("#my_color_picker").colorpicker();
       </script>
   </body>

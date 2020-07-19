@@ -20,7 +20,7 @@
             //Needed to read our login username
             if(!session_id()) {
             	session_start();
-            }
+ 			}
             // Check if user clicked then Add new game title link
             if (isset($_GET['clicked'])) {
                 $clicked = $_GET['clicked'];
@@ -35,30 +35,30 @@
          <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" id="addForm">
             <!-- Game Title -->
             <div id="name">
-              <label id="formTxt" for="newGameName">Title</label>
-              <input type="text" name="newGameName">
+              <label id="hidden" id="formTxt" for="newGameName">Title</label>
+              <input type="text" name="newGameName" placeholder="Game Title">
               <br/>
             </div>
             <div id="dev">
               <!-- Game Dev -->
-              <label id="formTxt" for="newDev">Developer</label>
-              <input type="text" name="newDev" >
+              <label id="hidden" id="formTxt" for="newDev">Developer</label>
+              <input type="text" name="newDev" placeholder="Developer Name">
               <br/>
             </div>
             <div id="yr">
               <!-- Game Yr -->
-              <label id="formTxt" for="newYr">Year</label>
-              <input type="text" name="newYr" cols="2" rows="2">
+              <label id="hidden" id="formTxt" for="newYr">Year</label>
+              <input type="text" name="newYr" cols="2" rows="2" placeholder="Year Released">
               <br>
             </div>
             <div id="genre">
               <!-- Game Genre -->
-              <label id="formTxt" for="genreDrop">Genre</label>
-              <input type="text" name="genreDrop" >
+              <label id="hidden" id="formTxt" for="genreDrop">Genre</label>
+              <input type="text" name="genreDrop" placeholder="Game Genre" >
             </div>
             <!-- Game Summary -->
-            <label id="formTxt" for="newSum">Summary</label><br>
-            <textarea name="newSum" id="newSumBox" rows="10" cols="40">Enter game summary</textarea>
+            <label id="hidden" id="formTxt" for="newSum">Summary</label><br>
+            <textarea name="newSum" id="newSumBox" rows="10" cols="40" placeholder="Enter Game Summary"></textarea>
             <br><br>
             <?php
                //
@@ -103,11 +103,11 @@
             // Obtain and display game titles and their authors from the 
             // database to the web page by game category
          ?>
-         <h2 id="topHeading">The Last Game Library
+         <h2 id="topHeading">The Last Game Library</h2>
          <?php 
-            if(isset($_SESSION['uName'])) {
+            if(isset($_SESSION['uName']) && isset($_SESSION['authenticated'])) {
                $uName = $_SESSION['uName'];
-               echo "<h2 style=\"color:white;font-size:0.75rem;\">  Logged in as: " .  $uName . "<h2>\n";
+               echo "<h2 id=\"login\" style=\"color:white;font-size:0.75rem;\">  Logged in as: " .  $uName . "<h2>\n";
             }
 
             require 'dbConnect.php';
@@ -294,7 +294,13 @@
       <script src="js/jquery.easing.1.3.js"></script>
       <script src='js/jquery.colorpicker.js'></script>
       <script src="js/slidePanes.js"></script>
-      <div class="debug"></div>
+      <div class="debug">
+		  <?php
+			if (isset($_SESSION['passedColor'])) {
+				include 'colorpicker.php'; 
+			}
+		  ?>
+	  </div>
       <script>$("#my_color_picker").colorpicker();
       </script>
    </body>

@@ -9,7 +9,7 @@ if(!session_id()) {
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Authors Admin Page</title>
+    <title>Admin Page: Devs</title>
     <link href="../css/styles.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
@@ -25,6 +25,15 @@ if(!session_id()) {
   <div id="container">
     <h2>Manage Devs</h2>
     <?php
+    //Required anywhere we use our db
+      if(!session_id()) {
+          session_start();
+      }
+      if (isset($_SESSION["uName"])) {
+        $uName = $_SESSION["uName"];
+        //Is our HASHED password remember
+        $pWord = $_SESSION["pWord"];
+      } 
       require "../dbConnect.php";
       //Grab all entries from our authors table, and order them nicely
       try {
@@ -38,15 +47,14 @@ if(!session_id()) {
       
       echo "<table>\n";
       
-      //Grab all the authors, and begin outputting them to a table
-      //while($row = $authorResults->fetch())
+      //Grab all the devs, and begin outputting them to a table
       $authorArray = $authorResults->fetchAll();
       
       foreach($authorArray as $row) {
         echo <<<TABLEROW
         <tr>
-          <td class="developer">$row[developer]</td>
-          <td class="devId">$row[id]</td>
+          <td class="categoryTitle">$row[developer]</td>
+          <td class="categoryID">$row[id]</td>
           <td class="links">
             <a href="editAuthor.php?devId=$row[id]&devName=$row[developer]">Edit</a>   
             <a href="deleteAuthor.php?devId=$row[id]&devName=$row[developer]">Delete</a>   
@@ -66,11 +74,17 @@ TABLEROW;
          type="text/css"
          />
       
-      <link rel='stylesheet' href='css/jquery.colorpicker.css' />
-      <script src="js/jquery.easing.1.3.js"></script>
-      <script src='js/jquery.colorpicker.js'></script>
-      <script src="js/slidePanes.js"></script>
-      <div class="debug"></div>
+      <link rel='stylesheet' href='../css/jquery.colorpicker.css' />
+	  <script src='../js/jquery.colorpicker.js'></script>
+      <div class="debug">
+	    <?php
+		if (isset($_SESSION['passedColor'])) {
+			include '../colorpicker.php'; 
+		} else {
+			echo "<h2 style=\"color:red\">COLOR LOAD ERROR<h2>\n";
+		}
+	  ?>
+	  </div>
       <script>$("#my_color_picker").colorpicker();
       </script>
   </body>
