@@ -36,29 +36,29 @@
             <!-- Game Title -->
             <div id="name">
               <label id="hidden" id="formTxt" for="newGameName">Title</label>
-              <input type="text" name="newGameName" placeholder="Game Title">
+              <input type="text" maxlength="75" name="newGameName" placeholder="Game Title">
               <br/>
             </div>
             <div id="dev">
               <!-- Game Dev -->
               <label id="hidden" id="formTxt" for="newDev">Developer</label>
-              <input type="text" name="newDev" placeholder="Developer Name">
+              <input type="text" maxlength="75" name="newDev" placeholder="Developer Name">
               <br/>
             </div>
             <div id="yr">
               <!-- Game Yr -->
               <label id="hidden" id="formTxt" for="newYr">Year</label>
-              <input type="text" name="newYr" cols="2" rows="2" placeholder="Year Released">
+              <input type="text" name="newYr" cols="2" rows="2" maxlength="4" size="4" placeholder="Year Released">
               <br>
             </div>
             <div id="genre">
               <!-- Game Genre -->
               <label id="hidden" id="formTxt" for="genreDrop">Genre</label>
-              <input type="text" name="genreDrop" placeholder="Game Genre" >
+              <input type="text" maxlength="100" name="genreDrop" placeholder="Game Genre" >
             </div>
             <!-- Game Summary -->
             <label id="hidden" id="formTxt" for="newSum">Summary</label><br>
-            <textarea name="newSum" id="newSumBox" rows="10" cols="40" placeholder="Enter Game Summary"></textarea>
+            <textarea name="newSum" maxlength="1000" id="newSumBox" rows="10" cols="40" placeholder="Enter Game Summary"></textarea>
             <br><br>
             <?php
                //
